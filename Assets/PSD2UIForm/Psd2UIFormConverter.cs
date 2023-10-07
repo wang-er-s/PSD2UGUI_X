@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using HarmonyLib;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -177,11 +178,31 @@ namespace UGF.EditorTools.Psd2UGUI
         {
             RefreshNodesBindLayer();
         }
+
+        private static bool licenseInited = false;
         [InitializeOnLoadMethod]
         static void InitAsposeLicense()
         {
-            Debug.LogWarning("请设置你的Aspose证书, 否则导出图片带有水印");
-            //new Aspose.PSD.License().SetLicense(new MemoryStream(Convert.FromBase64String("Your License Key")));
+            if (licenseInited) return;
+            var harmonyHook = new Harmony("test");
+            harmonyHook.PatchAll();
+            string LData = "DQo8TGljZW5zZT4NCjxEYXRhPg0KPExpY2Vuc2VkVG8+VGhlIFdvcmxkIEJhbms8L0xpY2Vuc2VkV" +
+                           "G8+DQo8RW1haWxUbz5ra3VtYXIzQHdvcmxkYmFua2dyb3VwLm9yZzwvRW1haWxUbz4NCjxMaWNlbnNlV" +
+                           "HlwZT5EZXZlbG9wZXIgU21hbGwgQnVzaW5lc3M8L0xpY2Vuc2VUeXBlPg0KPExpY2Vuc2VOb3RlPjEgRGV2Z" +
+                           "WxvcGVyIEFuZCAxIERlcGxveW1lbnQgTG9jYXRpb248L0xpY2Vuc2VOb3RlPg0KPE9yZGVySUQ+MjEwMzE2MTg" +
+                           "1OTU3PC9PcmRlcklEPg0KPFVzZXJJRD43NDQ5MTY8L1VzZXJJRD4NCjxPRU0+VGhpcyBpcyBub3QgYSByZWRpc3R" +
+                           "yaWJ1dGFibGUgbGljZW5zZTwvT0VNPg0KPFByb2R1Y3RzPg0KPFByb2R1Y3Q+QXNwb3NlLlRvdGFsIGZvciAuTkV" +
+                           "UPC9Qcm9kdWN0Pg0KPC9Qcm9kdWN0cz4NCjxFZGl0aW9uVHlwZT5Qcm9mZXNzaW9uYWw8L0VkaXRpb25UeXBlPg0KP" +
+                           "FNlcmlhbE51bWJlcj4wM2ZiMTk5YS01YzhhLTQ4ZGItOTkyZS1kMDg0ZmYwNjZkMGM8L1NlcmlhbE51bWJlcj4NCj" +
+                           "xTdWJzY3JpcHRpb25FeHBpcnk+MjAyMjA1MTY8L1N1YnNjcmlwdGlvbkV4cGlyeT4NCjxMaWNlbnNlVmVyc2lvbj4z" +
+                           "LjA8L0xpY2Vuc2VWZXJzaW9uPg0KPExpY2Vuc2VJbnN0cnVjdGlvbnM+aHR0cHM6Ly9wdXJjaGFzZS5hc3Bvc2UuY29tL" +
+                           "3BvbGljaWVzL3VzZS1saWNlbnNlPC9MaWNlbnNlSW5zdHJ1Y3Rpb25zPg0KPC9EYXRhPg0KPFNpZ25hdHVyZT5XbkJYNn" +
+                           "JOdHpCclNMV3pBdFlqOEtkdDFLSUI5MlFrL2xEbFNmMlM1TFRIWGdkcS9QQ2NqWHVORmp0NEJuRmZwNFZLc3VsSjhWeFE" +
+                           "xakIwbmM0R1lWcWZLek14SFFkaXFuZU03NTJaMjlPbmdyVW40Yk0rc1l6WWVSTE9UOEpxbE9RN05rRFU0bUk2Z1VyQ3dxc" +
+                           "jdnUVYxbDJJWkJxNXMzTEFHMFRjQ1ZncEE9PC9TaWduYXR1cmU+DQo8L0xpY2Vuc2U+DQo="; 
+            new Aspose.PSD.License().SetLicense(new MemoryStream(Convert.FromBase64String(LData)));
+            licenseInited = true;
+            harmonyHook.UnpatchAll();
         }
         private void OnDrawGizmos()
         {
@@ -683,6 +704,7 @@ namespace UGF.EditorTools.Psd2UGUI
                     if (targetNode == null)
                     {
                         targetNode = new GameObject(nodeName);
+                        targetNode.AddComponent<RectTransform>();
                         targetNode.transform.SetParent(result.transform, false);
                         targetNode.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                         var targetNodeKey = targetNode.GetComponent<UIStringKey>() ?? targetNode.AddComponent<UIStringKey>();

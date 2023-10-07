@@ -130,6 +130,7 @@ MonoBehaviour:
     - btlabel
     - buttontext
     - buttonlabel
+    - buttontxt
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u6309\u94AE\u6587\u672C\uFF0C\u5FC5\u987B\u662F\u6587\u672C\u56FE\u5C42.

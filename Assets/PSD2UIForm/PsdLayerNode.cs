@@ -184,7 +184,7 @@ namespace UGF.EditorTools.Psd2UGUI
                 File.WriteAllBytes(imgFileName, bytes);
                 //if (Psd2UIFormSettings.Instance.CompressImage)
                 //{
-                //    bool compressResult = Psd2UIFormConverter.CompressImageFile(imgFileName);
+                    bool compressResult = Psd2UIFormConverter.CompressImageFile(imgFileName);
                 //    if (compressResult)
                 //    {
                 //        Debug.Log($"成功压缩图片:{imgFileName}");
