@@ -10,12 +10,14 @@ using Aspose.PSD.FileFormats.Psd.Layers.SmartObjects;
 using Aspose.PSD.ImageLoadOptions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using HarmonyLib;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace UGF.EditorTools.Psd2UGUI
 {
@@ -402,11 +404,11 @@ namespace UGF.EditorTools.Psd2UGUI
             }
             else
             {
+                
                 Psd2UIFormConverter rootLayer = CreatePsdLayerRoot(rootName);
                 rootLayer.psdAssetChangeTime = GetAssetChangeTag(psdFile);
                 rootLayer.SetPsdAsset(psdFile);
                 ParsePsdLayer2Root(psdFile, rootLayer);
-
                 PrefabUtility.SaveAsPrefabAsset(rootLayer.gameObject, prefabFile, out bool savePrefabSuccess);
                 if (needDestroyInstance) GameObject.DestroyImmediate(rootLayer.gameObject);
                 AssetDatabase.Refresh();
@@ -436,10 +438,10 @@ namespace UGF.EditorTools.Psd2UGUI
                 using (var psd = Aspose.PSD.Image.Load(psdFile, psdOpts) as PsdImage)
                 {
                     List<GameObject> layerNodes = new List<GameObject> { converter.gameObject };
-
                     for (int i = 0; i < psd.Layers.Length; i++)
                     {
                         var layer = psd.Layers[i];
+                        if(layer.Name.StartsWith("#")) continue;
                         var curLayerType = layer.GetLayerType();
                         if (curLayerType == PsdLayerType.SectionDividerLayer)
                         {

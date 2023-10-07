@@ -65,7 +65,7 @@ namespace UGF.EditorTools.Psd2UGUI
                 uiInstance = GameObject.Instantiate(rule.UIPrefab, Vector3.zero, Quaternion.identity);
                 if (LayerNode.IsMainUIType)
                 {
-                    uiInstance.name = this.name;
+                    uiInstance.name = this.LayerNode.GetName();
                     var key = uiInstance.GetComponent<UIStringKey>() ?? uiInstance.AddComponent<UIStringKey>();
                     key.Key = this.gameObject.GetInstanceID().ToString();
                 }

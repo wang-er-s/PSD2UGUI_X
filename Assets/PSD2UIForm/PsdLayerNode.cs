@@ -10,6 +10,7 @@ using Aspose.PSD.ImageOptions;
 using UnityEditor;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Aspose.PSD.FileFormats.Psd;
 using Aspose.PSD.FileFormats.Psd.Layers.SmartObjects;
 
@@ -167,6 +168,10 @@ namespace UGF.EditorTools.Psd2UGUI
             {
                 var bytes = PreviewTexture.EncodeToPNG();
                 var imgName = string.Format("{0}_{1}", string.IsNullOrWhiteSpace(name) ? UIType.ToString() : name, BindPsdLayerIndex);
+                if (IsSingleImg())
+                {
+                    imgName = GetName();
+                }
                 var exportDir = Psd2UIFormConverter.Instance.GetUIFormImagesOutputDir();
                 if (!Directory.Exists(exportDir))
                 {
@@ -181,10 +186,11 @@ namespace UGF.EditorTools.Psd2UGUI
                     }
                 }
                 var imgFileName = Path.Combine(exportDir, imgName + ".png");
-                File.WriteAllBytes(imgFileName, bytes);
+                if (!File.Exists(imgFileName))
+                    File.WriteAllBytes(imgFileName, bytes);
                 //if (Psd2UIFormSettings.Instance.CompressImage)
                 //{
-                    bool compressResult = Psd2UIFormConverter.CompressImageFile(imgFileName);
+                //    bool compressResult = Psd2UIFormConverter.CompressImageFile(imgFileName);
                 //    if (compressResult)
                 //    {
                 //        Debug.Log($"成功压缩图片:{imgFileName}");
@@ -202,6 +208,25 @@ namespace UGF.EditorTools.Psd2UGUI
 
             return assetName;
         }
+
+        public string GetName()
+        {
+            if (!IsSingleImg())
+            {
+                return string.IsNullOrWhiteSpace(name) ? UIType.ToString() : name;
+            }
+            else
+            {
+                return Regex.Match(name, @"\((.*?)\)").Groups[1].Value;
+            }
+        }
+
+        public bool IsSingleImg()
+        {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+            return Regex.Match(name, @"\((.*?)\)").Success;
+        }
+        
         public bool RefreshLayerTexture(bool forceRefresh = false)
         {
             if (!forceRefresh && PreviewTexture != null)
