@@ -3,15 +3,17 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGF.EditorTools.Psd2UGUI
 {
     [DisallowMultipleComponent]
     public class RawImageHelper : UIHelperBase
     {
-        [SerializeField] PsdLayerNode rawImage;
+        [SerializeField] private PsdLayerNode rawImage;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -25,7 +27,7 @@ namespace UGF.EditorTools.Psd2UGUI
 
         protected override void InitUIElements(GameObject uiRoot)
         {
-            var imgCom = uiRoot.GetComponentInChildren<UnityEngine.UI.RawImage>();
+            var imgCom = uiRoot.GetComponentInChildren<RawImage>();
             UGUIParser.SetRectTransform(rawImage, imgCom);
             imgCom.texture = UGUIParser.LayerNode2Texture(rawImage);
         }

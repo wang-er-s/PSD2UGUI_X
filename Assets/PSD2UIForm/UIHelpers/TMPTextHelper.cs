@@ -3,9 +3,9 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace UGF.EditorTools.Psd2UGUI
@@ -13,7 +13,7 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class TMPTextHelper : UIHelperBase
     {
-        [SerializeField] PsdLayerNode text;
+        [SerializeField] private PsdLayerNode text;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -23,18 +23,14 @@ namespace UGF.EditorTools.Psd2UGUI
         public override void ParseAndAttachUIElements()
         {
             if (LayerNode.IsTextLayer(out var _))
-            {
                 text = LayerNode;
-            }
             else
-            {
                 LayerNode.SetUIType(UGUIParser.Instance.DefaultImage);
-            }
         }
 
         protected override void InitUIElements(GameObject uiRoot)
         {
-            var textCom = uiRoot.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            var textCom = uiRoot.GetComponentInChildren<TextMeshProUGUI>();
             UGUIParser.SetTextStyle(text, textCom);
             UGUIParser.SetRectTransform(text, textCom);
         }

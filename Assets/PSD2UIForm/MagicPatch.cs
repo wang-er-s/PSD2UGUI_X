@@ -1,16 +1,16 @@
-﻿using HarmonyLib;
+﻿using System.Xml;
+using HarmonyLib;
 
-[HarmonyPatch(typeof(System.Xml.XmlElement), nameof(System.Xml.XmlElement.InnerText), MethodType.Getter)]
-class MagicPatch
+[HarmonyPatch(typeof(XmlElement), nameof(XmlElement.InnerText), MethodType.Getter)]
+internal class MagicPatch
 {
-    static void Prefix()
+    private static void Prefix()
     {
-        
     }
 
-    static void Postfix(ref string __result)
+    private static void Postfix(ref string __result)
     {
         if (__result == "20220516")
-            __result = "20250516";    
+            __result = "20250516";
     }
 }

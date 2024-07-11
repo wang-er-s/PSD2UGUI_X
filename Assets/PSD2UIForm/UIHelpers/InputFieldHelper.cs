@@ -3,9 +3,8 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +13,10 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class InputFieldHelper : UIHelperBase
     {
-        [SerializeField] PsdLayerNode background;
-        [SerializeField] PsdLayerNode placeholder;
-        [SerializeField] PsdLayerNode text;
+        [SerializeField] private PsdLayerNode background;
+        [SerializeField] private PsdLayerNode placeholder;
+        [SerializeField] private PsdLayerNode text;
+
         public override PsdLayerNode[] GetDependencies()
         {
             return CalculateDependencies(background, placeholder, text);

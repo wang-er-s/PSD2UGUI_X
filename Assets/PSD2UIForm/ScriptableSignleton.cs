@@ -3,89 +3,86 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
 using System;
 using System.IO;
 using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace UGF.EditorTools.Psd2UGUI
 {
     public class ScriptableSingleton<T> : ScriptableObject where T : ScriptableObject
     {
         private static T s_Instance;
+
         public static T Instance
         {
             get
             {
-                if (!s_Instance)
-                {
-                    LoadOrCreate();
-                }
+                if (!s_Instance) LoadOrCreate();
+
                 return s_Instance;
             }
         }
+
         public static T LoadOrCreate()
         {
-            string filePath = GetFilePath();
+            var filePath = GetFilePath();
             if (!string.IsNullOrEmpty(filePath))
             {
                 var arr = InternalEditorUtility.LoadSerializedFileAndForget(filePath);
-                s_Instance = arr.Length > 0 ? arr[0] as T : s_Instance??CreateInstance<T>();
+                s_Instance = arr.Length > 0 ? arr[0] as T : s_Instance ?? CreateInstance<T>();
             }
             else
             {
                 Debug.LogError($"{nameof(ScriptableSingleton<T>)}: 请设置持久化存档路径！ ");
             }
+
             return s_Instance;
         }
 
         public static void Save(bool saveAsText = true)
         {
-            if (!s_Instance)
-            {
-                return;
-            }
+            if (!s_Instance) return;
 
-            string filePath = GetFilePath();
+            var filePath = GetFilePath();
             if (!string.IsNullOrEmpty(filePath))
             {
-                string directoryName = Path.GetDirectoryName(filePath);
-                if (!Directory.Exists(directoryName))
-                {
-                    Directory.CreateDirectory(directoryName);
-                }
-                UnityEngine.Object[] obj = new T[1] { s_Instance };
+                var directoryName = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(directoryName)) Directory.CreateDirectory(directoryName);
+
+                Object[] obj = { s_Instance };
                 InternalEditorUtility.SaveToSerializedFileAndForget(obj, filePath, saveAsText);
             }
         }
+
         protected static string GetFilePath()
         {
-            return typeof(T).GetCustomAttributes(inherit: true)
-                  .Cast<FilePathAttribute>()
-                  .FirstOrDefault(v => v != null)
-                  ?.filepath;
+            return typeof(T).GetCustomAttributes(true)
+                .Cast<FilePathAttribute>()
+                .FirstOrDefault(v => v != null)
+                ?.filepath;
         }
     }
+
     [AttributeUsage(AttributeTargets.Class)]
     public class FilePathAttribute : Attribute
     {
         internal string filepath;
+
         /// <summary>
-        /// 单例存放路径
+        ///     单例存放路径
         /// </summary>
         /// <param name="path">相对 Project 路径</param>
         public FilePathAttribute(string path)
         {
-            if (string.IsNullOrEmpty(path))
-            {
-                throw new ArgumentException("Invalid relative path (it is empty)");
-            }
-            if (path[0] == '/')
-            {
-                path = path.Substring(1);
-            }
+            if (string.IsNullOrEmpty(path)) throw new ArgumentException("Invalid relative path (it is empty)");
+
+            if (path[0] == '/') path = path.Substring(1);
+
             filepath = path;
         }
     }

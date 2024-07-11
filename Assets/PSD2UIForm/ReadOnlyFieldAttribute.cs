@@ -3,9 +3,8 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,8 +12,8 @@ namespace UGF.EditorTools.Psd2UGUI
 {
     public class ReadOnlyFieldAttribute : PropertyAttribute
     {
-
     }
+
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     public class ReadOnlyFieldDrawer : PropertyDrawer
     {

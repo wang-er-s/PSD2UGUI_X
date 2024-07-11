@@ -3,15 +3,17 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGF.EditorTools.Psd2UGUI
 {
     [DisallowMultipleComponent]
     public class MaskHelper : UIHelperBase
     {
-        [SerializeField] PsdLayerNode mask;
+        [SerializeField] private PsdLayerNode mask;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -25,9 +27,9 @@ namespace UGF.EditorTools.Psd2UGUI
 
         protected override void InitUIElements(GameObject uiRoot)
         {
-            var imgCom = uiRoot.GetComponentInChildren<UnityEngine.UI.Image>();
+            var imgCom = uiRoot.GetComponentInChildren<Image>();
             UGUIParser.SetRectTransform(mask, imgCom);
-            imgCom.sprite = UGUIParser.LayerNode2Sprite(mask, imgCom.type == UnityEngine.UI.Image.Type.Sliced);
+            imgCom.sprite = UGUIParser.LayerNode2Sprite(mask, imgCom.type == Image.Type.Sliced);
         }
     }
 }

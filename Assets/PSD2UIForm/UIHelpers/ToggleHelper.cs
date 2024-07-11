@@ -3,19 +3,19 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGF.EditorTools.Psd2UGUI
 {
     [DisallowMultipleComponent]
     public class ToggleHelper : UIHelperBase
     {
-        [SerializeField] PsdLayerNode background;
-        [SerializeField] PsdLayerNode checkmark;
-        [SerializeField] PsdLayerNode label;
+        [SerializeField] private PsdLayerNode background;
+        [SerializeField] private PsdLayerNode checkmark;
+        [SerializeField] private PsdLayerNode label;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -31,28 +31,25 @@ namespace UGF.EditorTools.Psd2UGUI
 
         protected override void InitUIElements(GameObject uiRoot)
         {
-            var tgCom = uiRoot.GetComponent<UnityEngine.UI.Toggle>();
+            var tgCom = uiRoot.GetComponent<Toggle>();
             UGUIParser.SetRectTransform(LayerNode, tgCom);
 
-            var bgCom = tgCom.targetGraphic as UnityEngine.UI.Image;
+            var bgCom = tgCom.targetGraphic as Image;
             if (bgCom != null)
             {
-                bgCom.sprite = UGUIParser.LayerNode2Sprite(background, bgCom.type == UnityEngine.UI.Image.Type.Sliced);
+                bgCom.sprite = UGUIParser.LayerNode2Sprite(background, bgCom.type == Image.Type.Sliced);
                 UGUIParser.SetRectTransform(background, bgCom);
             }
 
-            var markCom = tgCom.graphic as UnityEngine.UI.Image;
+            var markCom = tgCom.graphic as Image;
             if (markCom != null)
             {
-                markCom.sprite = UGUIParser.LayerNode2Sprite(checkmark, markCom.type == UnityEngine.UI.Image.Type.Sliced);
+                markCom.sprite = UGUIParser.LayerNode2Sprite(checkmark, markCom.type == Image.Type.Sliced);
                 UGUIParser.SetRectTransform(checkmark, markCom);
             }
 
-            var textCom = tgCom.transform.Find("Label")?.GetComponent<UnityEngine.UI.Text>();
-            if (textCom != null)
-            {
-                textCom.gameObject.SetActive(label != null);
-            }
+            var textCom = tgCom.transform.Find("Label")?.GetComponent<Text>();
+            if (textCom != null) textCom.gameObject.SetActive(label != null);
             UGUIParser.SetTextStyle(label, textCom);
             UGUIParser.SetRectTransform(label, textCom);
         }

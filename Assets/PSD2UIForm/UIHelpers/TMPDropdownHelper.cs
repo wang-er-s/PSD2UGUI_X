@@ -3,6 +3,7 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
 using TMPro;
 using UnityEngine;
@@ -13,14 +14,15 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class TMPDropdownHelper : UIHelperBase
     {
-        [SerializeField] PsdLayerNode background;
-        [SerializeField] PsdLayerNode label;
-        [SerializeField] PsdLayerNode arrow;
-        [SerializeField] PsdLayerNode scrollView;
-        [SerializeField] PsdLayerNode toggleItem;
+        [SerializeField] private PsdLayerNode background;
+        [SerializeField] private PsdLayerNode label;
+        [SerializeField] private PsdLayerNode arrow;
+        [SerializeField] private PsdLayerNode scrollView;
+        [SerializeField] private PsdLayerNode toggleItem;
+
         public override PsdLayerNode[] GetDependencies()
         {
-            return CalculateDependencies( background, label, arrow, scrollView, toggleItem);
+            return CalculateDependencies(background, label, arrow, scrollView, toggleItem);
         }
 
         public override void ParseAndAttachUIElements()
@@ -47,6 +49,7 @@ namespace UGF.EditorTools.Psd2UGUI
                 UGUIParser.SetRectTransform(arrow, arrowImg);
                 arrowImg.sprite = UGUIParser.LayerNode2Sprite(arrow, arrowImg.type == Image.Type.Sliced);
             }
+
             if (scrollView != null)
             {
                 var svTmp = uiRoot.GetComponentInChildren<ScrollRect>(true);
@@ -70,6 +73,7 @@ namespace UGF.EditorTools.Psd2UGUI
                     svTmp.horizontalScrollbar = null;
                     hbarTmp.gameObject.SetActive(false);
                 }
+
                 if (svTmp.verticalScrollbar != null)
                 {
                     var vbarTmp = svTmp.verticalScrollbar;
@@ -77,11 +81,13 @@ namespace UGF.EditorTools.Psd2UGUI
                     vbarTmp.gameObject.SetActive(false);
                 }
             }
+
             if (toggleItem != null)
             {
                 var itemTmp = dpd.itemText != null ? dpd.itemText.transform.parent : null;
                 if (itemTmp != null) toggleItem.GetComponent<ToggleHelper>()?.CreateUI(itemTmp.gameObject);
             }
+
             var scrollRect = uiRoot.GetComponentInChildren<ScrollRect>(true);
             if (scrollRect != null)
             {

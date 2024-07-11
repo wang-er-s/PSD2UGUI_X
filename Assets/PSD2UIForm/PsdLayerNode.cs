@@ -3,16 +3,20 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
-using UnityEngine;
-using Aspose.PSD.FileFormats.Psd.Layers;
-using Aspose.PSD.ImageOptions;
-using UnityEditor;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Aspose.PSD.FileFormats.Png;
 using Aspose.PSD.FileFormats.Psd;
+using Aspose.PSD.FileFormats.Psd.Layers;
 using Aspose.PSD.FileFormats.Psd.Layers.SmartObjects;
+using Aspose.PSD.ImageOptions;
+using TMPro;
+using UnityEditor;
+using UnityEngine;
 
 namespace UGF.EditorTools.Psd2UGUI
 {
@@ -20,7 +24,8 @@ namespace UGF.EditorTools.Psd2UGUI
     [CustomEditor(typeof(PsdLayerNode))]
     public class PsdLayerNodeInspector : Editor
     {
-        PsdLayerNode targetLogic;
+        private PsdLayerNode targetLogic;
+
         private void OnEnable()
         {
             targetLogic = target as PsdLayerNode;
@@ -34,22 +39,18 @@ namespace UGF.EditorTools.Psd2UGUI
             EditorGUI.BeginChangeCheck();
             {
                 targetLogic.UIType = (GUIType)EditorGUILayout.EnumPopup("UI Type", targetLogic.UIType);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    targetLogic.SetUIType(targetLogic.UIType);
-                }
+                if (EditorGUI.EndChangeCheck()) targetLogic.SetUIType(targetLogic.UIType);
             }
             EditorGUILayout.BeginHorizontal();
             {
                 if (GUILayout.Button("导出图片"))
-                {
                     foreach (var item in targets)
                     {
                         if (item == null) continue;
 
                         (item as PsdLayerNode)?.ExportImageAsset();
                     }
-                }
+
                 EditorGUILayout.EndHorizontal();
             }
             serializedObject.ApplyModifiedProperties();
@@ -57,39 +58,45 @@ namespace UGF.EditorTools.Psd2UGUI
 
         public override bool HasPreviewGUI()
         {
-            var layerNode = (target as PsdLayerNode);
+            var layerNode = target as PsdLayerNode;
             return layerNode != null && layerNode.PreviewTexture != null;
         }
 
         public override void OnPreviewGUI(Rect r, GUIStyle background)
         {
-            var layerNode = (target as PsdLayerNode);
+            var layerNode = target as PsdLayerNode;
             GUI.DrawTexture(r, layerNode.PreviewTexture, ScaleMode.ScaleToFit);
             //base.OnPreviewGUI(r, background);
         }
+
         public override string GetInfoString()
         {
-            var layerNode = (target as PsdLayerNode);
+            var layerNode = target as PsdLayerNode;
             return layerNode.LayerInfo;
         }
     }
+
     [ExecuteInEditMode]
     [DisallowMultipleComponent]
     public class PsdLayerNode : MonoBehaviour
     {
         [ReadOnlyField] public int BindPsdLayerIndex = -1;
-        [ReadOnlyField][SerializeField] PsdLayerType mLayerType = PsdLayerType.Unknown;
+        [ReadOnlyField] [SerializeField] private PsdLayerType mLayerType = PsdLayerType.Unknown;
         [SerializeField] public bool markToExport;
         [HideInInspector] public GUIType UIType;
+
+        /// <summary>
+        ///     绑定的psd图层
+        /// </summary>
+        private Layer mBindPsdLayer;
+
         public Texture2D PreviewTexture { get; private set; }
         public string LayerInfo { get; private set; }
         public Rect LayerRect { get; private set; }
-        public PsdLayerType LayerType { get => mLayerType; }
+
+        public PsdLayerType LayerType => mLayerType;
+
         public bool IsMainUIType => UGUIParser.IsMainUIType(UIType);
-        /// <summary>
-        /// 绑定的psd图层
-        /// </summary>
-        private Layer mBindPsdLayer;
 
         public Layer BindPsdLayer
         {
@@ -102,23 +109,20 @@ namespace UGF.EditorTools.Psd2UGUI
                 LayerInfo = $"{LayerRect}";
             }
         }
+
         private void OnDestroy()
         {
-            if (PreviewTexture != null)
-            {
-                DestroyImmediate(PreviewTexture);
-            }
+            if (PreviewTexture != null) DestroyImmediate(PreviewTexture);
         }
+
         public void SetUIType(GUIType uiType, bool triggerParseFunc = true)
         {
-            this.UIType = uiType;
+            UIType = uiType;
             RemoveUIHelper();
 
-            if (triggerParseFunc)
-            {
-                RefreshUIHelper(true);
-            }
+            if (triggerParseFunc) RefreshUIHelper(true);
         }
+
         public void RefreshUIHelper(bool refreshParent = false)
         {
             if (UIType == GUIType.Null) return;
@@ -126,65 +130,66 @@ namespace UGF.EditorTools.Psd2UGUI
             var uiHelperTp = UGUIParser.Instance.GetHelperType(UIType);
             if (uiHelperTp != null)
             {
-                var helper = (gameObject.GetComponent(uiHelperTp) ?? gameObject.AddComponent(uiHelperTp)) as UIHelperBase;
+                var helper =
+                    (gameObject.GetComponent(uiHelperTp) ?? gameObject.AddComponent(uiHelperTp)) as UIHelperBase;
                 helper.ParseAndAttachUIElements();
             }
+
             if (refreshParent)
             {
                 var parentHelper = transform.parent?.GetComponent<UIHelperBase>();
                 parentHelper?.ParseAndAttachUIElements();
             }
+
             EditorUtility.SetDirty(this);
         }
+
         private void RemoveUIHelper()
         {
-            var uiHelpers = this.GetComponents<UIHelperBase>();
+            var uiHelpers = GetComponents<UIHelperBase>();
             if (uiHelpers != null)
-            {
                 foreach (var uiHelper in uiHelpers)
-                {
                     DestroyImmediate(uiHelper);
-                }
-            }
+
             EditorUtility.SetDirty(this);
         }
+
         /// <summary>
-        /// 是否需要导出此图层
+        ///     是否需要导出此图层
         /// </summary>
         /// <returns></returns>
         public bool NeedExportImage()
         {
             return gameObject.activeSelf && markToExport;
         }
+
         /// <summary>
-        /// 导出图片
+        ///     导出图片
         /// </summary>
         /// <param name="forceSpriteType">强制贴图类型为Sprite</param>
         /// <returns></returns>
         public string ExportImageAsset(bool forceSpriteType = false)
         {
             string assetName = null;
-            if (this.RefreshLayerTexture())
+            if (RefreshLayerTexture())
             {
                 var bytes = PreviewTexture.EncodeToPNG();
-                var imgName = string.Format("{0}_{1}", string.IsNullOrWhiteSpace(name) ? UIType.ToString() : name, BindPsdLayerIndex);
-                if (IsSingleImg())
-                {
-                    imgName = GetName();
-                }
+                var imgName = string.Format("{0}_{1}", string.IsNullOrWhiteSpace(name) ? UIType.ToString() : name,
+                    BindPsdLayerIndex);
+                if (IsSingleImg()) imgName = GetName();
+
                 var exportDir = Psd2UIFormConverter.Instance.GetUIFormImagesOutputDir();
                 if (!Directory.Exists(exportDir))
-                {
                     try
                     {
                         Directory.CreateDirectory(exportDir);
                         AssetDatabase.Refresh();
                     }
-                    catch (System.Exception)
+                    catch (Exception)
                     {
                         return null;
                     }
-                }
+
                 var imgFileName = Path.Combine(exportDir, imgName + ".png");
                 if (!File.Exists(imgFileName))
                     File.WriteAllBytes(imgFileName, bytes);
@@ -201,9 +206,9 @@ namespace UGF.EditorTools.Psd2UGUI
                 //    }
                 //}
                 assetName = imgFileName;
-                bool isImage = !(this.UIType == GUIType.FillColor || this.UIType == GUIType.RawImage);
+                var isImage = !(UIType == GUIType.FillColor || UIType == GUIType.RawImage);
                 AssetDatabase.Refresh();
-                Psd2UIFormConverter.ConvertTexturesType(new string[] { imgFileName }, isImage || forceSpriteType);
+                Psd2UIFormConverter.ConvertTexturesType(new[] { imgFileName }, isImage || forceSpriteType);
             }
 
             return assetName;
@@ -212,13 +217,8 @@ namespace UGF.EditorTools.Psd2UGUI
         public string GetName()
         {
             if (!IsSingleImg())
-            {
                 return string.IsNullOrWhiteSpace(name) ? UIType.ToString() : name;
-            }
-            else
-            {
-                return Regex.Match(name, @"\((.*?)\)").Groups[1].Value;
-            }
+            return Regex.Match(name, @"\((.*?)\)").Groups[1].Value;
         }
 
         public bool IsSingleImg()
@@ -226,33 +226,29 @@ namespace UGF.EditorTools.Psd2UGUI
             if (string.IsNullOrWhiteSpace(name)) return false;
             return Regex.Match(name, @"\((.*?)\)").Success;
         }
-        
+
         public bool RefreshLayerTexture(bool forceRefresh = false)
         {
-            if (!forceRefresh && PreviewTexture != null)
-            {
-                return true;
-            }
+            if (!forceRefresh && PreviewTexture != null) return true;
 
             if (BindPsdLayer == null || BindPsdLayer.Disposed) return false;
 
             var pngOpt = new PngOptions
             {
-                ColorType = Aspose.PSD.FileFormats.Png.PngColorType.TruecolorWithAlpha
+                ColorType = PngColorType.TruecolorWithAlpha
             };
             if (BindPsdLayer.CanSave(pngOpt))
             {
-                if (PreviewTexture != null)
-                {
-                    DestroyImmediate(PreviewTexture);
-                }
-                PreviewTexture = this.ConvertPsdLayer2Texture2D();
+                if (PreviewTexture != null) DestroyImmediate(PreviewTexture);
+
+                PreviewTexture = ConvertPsdLayer2Texture2D();
             }
+
             return PreviewTexture != null;
         }
 
         /// <summary>
-        /// 把psd图层转成Texture2D
+        ///     把psd图层转成Texture2D
         /// </summary>
         /// <param name="psdLayer"></param>
         /// <returns>Texture2D</returns>
@@ -260,10 +256,10 @@ namespace UGF.EditorTools.Psd2UGUI
         {
             if (BindPsdLayer == null || BindPsdLayer.Disposed) return null;
 
-            MemoryStream ms = new MemoryStream();
-            var pngOpt = new Aspose.PSD.ImageOptions.PngOptions()
+            var ms = new MemoryStream();
+            var pngOpt = new PngOptions
             {
-                ColorType = Aspose.PSD.FileFormats.Png.PngColorType.TruecolorWithAlpha,
+                ColorType = PngColorType.TruecolorWithAlpha,
                 FullFrame = true
             };
             //var smartLayer = Psd2UIFormConverter.Instance.ConvertToSmartObjectLayer(BindPsdLayer);
@@ -278,7 +274,7 @@ namespace UGF.EditorTools.Psd2UGUI
             ms.Position = 0;
             ms.Read(buffer, 0, buffer.Length);
 
-            Texture2D texture = new Texture2D(BindPsdLayer.Width, BindPsdLayer.Height);
+            var texture = new Texture2D(BindPsdLayer.Width, BindPsdLayer.Height);
             texture.alphaIsTransparency = true;
             texture.LoadImage(buffer);
             texture.Apply();
@@ -287,22 +283,24 @@ namespace UGF.EditorTools.Psd2UGUI
         }
 
         /// <summary>
-        /// 从第一层子节点按类型查找LayerNode
+        ///     从第一层子节点按类型查找LayerNode
         /// </summary>
         /// <param name="uiTp"></param>
         /// <returns></returns>
         public PsdLayerNode FindSubLayerNode(GUIType uiTp)
         {
-            for (int i = 0; i < transform.childCount; i++)
+            for (var i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i)?.GetComponent<PsdLayerNode>();
 
                 if (child != null && child.UIType == uiTp) return child;
             }
+
             return null;
         }
+
         /// <summary>
-        /// 依次查找给定多个类型,返回最先找到的类型
+        ///     依次查找给定多个类型,返回最先找到的类型
         /// </summary>
         /// <param name="uiTps"></param>
         /// <returns></returns>
@@ -313,20 +311,20 @@ namespace UGF.EditorTools.Psd2UGUI
                 var result = FindSubLayerNode(tp);
                 if (result != null) return result;
             }
+
             return null;
         }
+
         public PsdLayerNode FindLayerNodeInChildren(GUIType uiTp)
         {
             var layers = GetComponentsInChildren<PsdLayerNode>(true);
-            if (layers != null && layers.Length > 0)
-            {
-                return layers.FirstOrDefault(layer => layer.UIType == uiTp);
-            }
+            if (layers != null && layers.Length > 0) return layers.FirstOrDefault(layer => layer.UIType == uiTp);
+
             return null;
         }
 
         /// <summary>
-        /// 判断该图层是否为文本图层
+        ///     判断该图层是否为文本图层
         /// </summary>
         /// <param name="layer"></param>
         /// <returns></returns>
@@ -340,63 +338,60 @@ namespace UGF.EditorTools.Psd2UGUI
                 layer = smartLayer.GetSmartObjectInnerTextLayer() as TextLayer;
                 return layer != null;
             }
-            else if (BindPsdLayer is TextLayer txtLayer)
+
+            if (BindPsdLayer is TextLayer txtLayer)
             {
                 layer = txtLayer;
                 return layer != null;
             }
+
             return false;
         }
+
         internal void InitPsdLayers(PsdImage psdInstance)
         {
             var layers = psdInstance.Layers;
             if (BindPsdLayerIndex >= 0 && BindPsdLayerIndex < layers.Length)
-            {
                 BindPsdLayer = psdInstance.Layers[BindPsdLayerIndex];
-            }
         }
-        internal bool ParseTextLayerInfo(out string text, out int fontSize, out float characterSpace, out float lineSpace, out Color fontColor, out UnityEngine.FontStyle fontStyle, out TMPro.FontStyles tmpFontStyle, out string fontName)
+
+        internal bool ParseTextLayerInfo(out string text, out int fontSize, out float characterSpace,
+            out float lineSpace, out Color fontColor, out FontStyle fontStyle,
+            out FontStyles tmpFontStyle, out string fontName)
         {
-            text = null; fontSize = 0; characterSpace = 0f; lineSpace = 0f; fontColor = Color.white; fontStyle = FontStyle.Normal; tmpFontStyle = TMPro.FontStyles.Normal; fontName = null;
+            text = null;
+            fontSize = 0;
+            characterSpace = 0f;
+            lineSpace = 0f;
+            fontColor = Color.white;
+            fontStyle = FontStyle.Normal;
+            tmpFontStyle = FontStyles.Normal;
+            fontName = null;
             if (IsTextLayer(out var txtLayer))
             {
                 text = txtLayer.Text;
                 fontSize = (int)(txtLayer.Font.Size * txtLayer.TransformMatrix[3]);
-                fontColor = new Color(txtLayer.TextColor.R, txtLayer.TextColor.G, txtLayer.TextColor.B, txtLayer.Opacity) / (float)255;
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold) && txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic))
-                {
-                    fontStyle = UnityEngine.FontStyle.BoldAndItalic;
-                }
+                fontColor = new Color(txtLayer.TextColor.R, txtLayer.TextColor.G, txtLayer.TextColor.B,
+                    txtLayer.Opacity) / 255;
+                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold) &&
+                    txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic))
+                    fontStyle = FontStyle.BoldAndItalic;
                 else if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold))
-                {
-                    fontStyle = UnityEngine.FontStyle.Bold;
-
-                }
+                    fontStyle = FontStyle.Bold;
                 else if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic))
-                {
-                    fontStyle = UnityEngine.FontStyle.Italic;
-                }
+                    fontStyle = FontStyle.Italic;
                 else
-                {
-                    fontStyle = UnityEngine.FontStyle.Normal;
-                }
+                    fontStyle = FontStyle.Normal;
 
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic))
-                {
-                    tmpFontStyle |= TMPro.FontStyles.Italic;
-                }
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold))
-                {
-                    tmpFontStyle |= TMPro.FontStyles.Bold;
-                }
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Underline))
-                {
-                    tmpFontStyle |= TMPro.FontStyles.Underline;
-                }
+                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic)) tmpFontStyle |= FontStyles.Italic;
+
+                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold)) tmpFontStyle |= FontStyles.Bold;
+
+                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Underline)) tmpFontStyle |= FontStyles.Underline;
+
                 if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Strikeout))
-                {
-                    tmpFontStyle |= TMPro.FontStyles.Strikethrough;
-                }
+                    tmpFontStyle |= FontStyles.Strikethrough;
+
                 fontName = txtLayer.Font.Name;
                 if (txtLayer.TextData.Items.Length > 0)
                 {
@@ -404,8 +399,10 @@ namespace UGF.EditorTools.Psd2UGUI
                     characterSpace = txtData.Style.Tracking * 0.1f;
                     lineSpace = (float)txtData.Style.Leading * 0.1f;
                 }
+
                 return true;
             }
+
             return false;
         }
     }

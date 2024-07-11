@@ -3,11 +3,9 @@
     https://blog.csdn.net/final5788
     https://github.com/sunsvip
  */
+
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,13 +14,15 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class TMPButtonHelper : UIHelperBase
     {
-        [SerializeField] PsdLayerNode background = null;
-        [SerializeField] PsdLayerNode text = null;
-        [Header("Sprite Swap:")]
-        [SerializeField] PsdLayerNode highlight = null;
-        [SerializeField] PsdLayerNode press = null;
-        [SerializeField] PsdLayerNode select = null;
-        [SerializeField] PsdLayerNode disable = null;
+        [SerializeField] private PsdLayerNode background;
+        [SerializeField] private PsdLayerNode text;
+
+        [Header("Sprite Swap:")] [SerializeField]
+        private PsdLayerNode highlight;
+
+        [SerializeField] private PsdLayerNode press;
+        [SerializeField] private PsdLayerNode select;
+        [SerializeField] private PsdLayerNode disable;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -43,12 +43,12 @@ namespace UGF.EditorTools.Psd2UGUI
         {
             var button = uiRoot.GetComponent<Button>();
             var btImg = button.GetComponent<Image>();
-            bool useSliceSp = btImg.type == Image.Type.Sliced;
+            var useSliceSp = btImg.type == Image.Type.Sliced;
             btImg.sprite = UGUIParser.LayerNode2Sprite(background, useSliceSp);
             UGUIParser.SetRectTransform(background, button);
             UGUIParser.SetTextStyle(text, uiRoot.GetComponentInChildren<TextMeshProUGUI>());
 
-            bool useSpriteSwap = highlight != null || press != null || select != null || disable != null;
+            var useSpriteSwap = highlight != null || press != null || select != null || disable != null;
             button.transition = useSpriteSwap ? Selectable.Transition.SpriteSwap : Selectable.Transition.ColorTint;
             if (button.transition == Selectable.Transition.SpriteSwap)
             {
