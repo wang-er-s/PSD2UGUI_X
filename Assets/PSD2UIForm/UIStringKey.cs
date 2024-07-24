@@ -14,7 +14,8 @@ namespace UGF.EditorTools.Psd2UGUI
     /// </summary>
     public sealed class UIStringKey : MonoBehaviour
     {
-        [SerializeField] private string m_Key;
+        [SerializeField]
+        private string m_Key;
 
         /// <summary>
         ///     获取或设置主键。

@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604781c46f1a1a5499744a1d81dfca4b, type: 3}
   m_Name: Psd2UIFormConfig
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   defaultTextType: 3
-  defaultImageType: 1
   uiFormTemplate: {fileID: 3548335019738977768, guid: 6d8c85c377edc7240ace111136f916b1, type: 3}
   rules:
   - UIType: 0
@@ -24,177 +32,127 @@ MonoBehaviour:
   - UIType: 1
     TypeMatches:
     - img
-    - image
     UIPrefab: {fileID: 539658542252911146, guid: 45ec11f7e92bc6943b46739017fb577e, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ImageHelper
     Comment: "UI\u56FE\u7247, Sprite\u7CBE\u7075\u56FE,\u652F\u6301\u4E5D\u5BAB\u62C9\u4F38"
   - UIType: 2
     TypeMatches:
     - rimg
-    - tex
-    - rawimg
-    - rawimage
     UIPrefab: {fileID: 3143317634023966962, guid: 7f36da2663cfd5749ad0e39fb84cab11, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.RawImageHelper
     Comment: "Texture\u8D34\u56FE, \u4E0D\u652F\u6301\u4E5D\u5BAB\u62C9\u4F38"
   - UIType: 3
     TypeMatches:
-    - txt
-    - text
-    - label
+    - oldtxt
     UIPrefab: {fileID: 2142815555493371067, guid: a1a4336caef721241a77847ef2fe31c2, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TextHelper
     Comment: "UGUI\u666E\u901AText\u6587\u672C"
   - UIType: 12
     TypeMatches:
-    - tmptxt
-    - tmptext
-    - tmplabel
+    - txt
     UIPrefab: {fileID: 7316614802678630410, guid: 560775e0937eb6146b144777c382cd29, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPTextHelper
     Comment: "Text Mesh Pro, \u52A0\u5F3A\u7248\u6587\u672C\u7C7B\u578B. \u901A\u5E38\u65E0\u9700\u6807\u6CE8\u6B64\u7C7B\u578B\uFF0C\u4F7F\u7528Text\u7C7B\u578B\u5373\u53EF"
   - UIType: 10
     TypeMatches:
-    - msk
     - mask
     UIPrefab: {fileID: 1362532462938489664, guid: fa8d704d2340c424b8d1f4fff0abc7cb, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.MaskHelper
     Comment: "\u906E\u7F69\u56FE\uFF0C\u6839\u636E\u906E\u7F69\u56FEalpha\u5BF9\u53EF\u4F7F\u533A\u57DF\u6DF7\u5408"
   - UIType: 11
     TypeMatches:
-    - col
     - color
-    - fillcolor
     UIPrefab: {fileID: 1507491723081099425, guid: cadb2a7dd614b5d489527d2721186e42, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.FillColorHelper
     Comment: "\u7EAF\u8272\u76F4\u89D2\u77E9\u5F62\u56FE\uFF0C\u4F8B\u5982\u76F4\u89D2\u77E9\u5F62\u7EAF\u8272\u56FE\u5C42\u53EF\u4EE5\u5728Unity\u4E2D\u8BBE\u7F6E\u989C\u8272\u5B9E\u73B0\uFF0C\u65E0\u9700\u5BFC\u51FA\u7EAF\u8272\u56FE\u7247"
   - UIType: 101
     TypeMatches:
     - bg
-    - background
-    - panel
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u80CC\u666F\u56FE,  \u5982Button\u80CC\u666F\uFF0CToggle\u80CC\u666F\u3001InputField\u80CC\u666F\u3001ScrollView\u7B49"
   - UIType: 4
     TypeMatches:
-    - bt
-    - btn
-    - button
+    - oldbtn
     UIPrefab: {fileID: 3046286455018181150, guid: 7fb39a4b45dce0f4f82b619c80b0d811, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ButtonHelper
     Comment: "\u6309\u94AE, \u901A\u5E38\u5305\u542B\u6309\u94AE\u80CC\u666F\u56FE\u3001\u6309\u94AE\u6587\u672C"
   - UIType: 13
     TypeMatches:
-    - tmpbt
-    - tmpbtn
-    - tmpbutton
+    - btn
     UIPrefab: {fileID: 3046286455018181150, guid: f91a5a8f057245e428f6532afb0e2c11, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPButtonHelper
     Comment: "\u6309\u94AE(Text Mesh Pro)"
   - UIType: 102
     TypeMatches:
-    - onover
-    - light
-    - highlight
+    - on
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u6309\u94AE\u9AD8\u4EAE\u65F6\u663E\u793A\u7684\u6309\u94AE\u56FE\u7247(\u5F53\u6309\u94AE\u4E3A\u591A\u79CD\u72B6\u6001\u56FE\u5207\u6362\u65F6)"
   - UIType: 103
     TypeMatches:
     - press
-    - click
-    - touch
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u6309\u4F4F\u6309\u94AE\u65F6\u663E\u793A\u7684\u56FE\u7247(\u5F53\u6309\u94AE\u4E3A\u591A\u79CD\u72B6\u6001\u56FE\u5207\u6362\u65F6)"
   - UIType: 104
     TypeMatches:
     - select
-    - focus
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u9009\u4E2D\u6309\u94AE\u65F6\u663E\u793A\u7684\u56FE\u7247(\u5F53\u6309\u94AE\u4E3A\u591A\u79CD\u72B6\u6001\u56FE\u5207\u6362\u65F6)"
   - UIType: 105
     TypeMatches:
     - disable
-    - forbid
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u7981\u7528\u6309\u94AE\u65F6\u663E\u793A\u7684\u56FE\u7247(\u5F53\u6309\u94AE\u4E3A\u591A\u79CD\u72B6\u6001\u56FE\u5207\u6362\u65F6)"
   - UIType: 106
     TypeMatches:
-    - bttxt
-    - btlb
-    - bttext
-    - btlabel
-    - buttontext
-    - buttonlabel
-    - buttontxt
+    - btntxt
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u6309\u94AE\u6587\u672C\uFF0C\u5FC5\u987B\u662F\u6587\u672C\u56FE\u5C42.
       \u5982\u679C\u662F\u827A\u672F\u5B57\u56FE\u7247\u53EF\u4EE5\u6807\u8BB0\u4E3AImage"
   - UIType: 5
     TypeMatches:
-    - dpd
-    - dropdown
+    - olddpd
     UIPrefab: {fileID: 766589674357564663, guid: 88d84c420a77ea14fb858d5475f873ff, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.DropdownHelper
     Comment: "\u4E0B\u62C9\u83DC\u5355, \u7531\u4E0B\u62C9\u6846\u3001\u4E0B\u62C9\u5217\u8868(ScrollVIew)\u3001Toggle\u7C7B\u578B\u7684item\u7EC4\u6210"
   - UIType: 14
     TypeMatches:
-    - tmpdpd
-    - tmpdropdown
+    - dpd
     UIPrefab: {fileID: 2542422486251405505, guid: e2ec1e4429406d54db75bcda08e8b68d, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPDropdownHelper
     Comment: "\u6309\u94AE(Text Mesh Pro)"
   - UIType: 107
     TypeMatches:
-    - dpdlb
-    - dpdlabel
     - dpdtxt
-    - dpdtext
-    - dropdowntext
-    - dropdownlabel
-    - dropdowntxt
-    - dropdownlb
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u4E0B\u62C9\u6846\u4E0A\u663E\u793A\u7684\u6587\u672C"
   - UIType: 108
     TypeMatches:
-    - dpdicon
     - dpdarrow
-    - arrow
-    - dropdownarrow
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u4E0B\u62C9\u6846\u7BAD\u5934\u56FE\u6807"
   - UIType: 6
     TypeMatches:
-    - ipt
-    - input
-    - inputbox
-    - inputfield
+    - oldinput
     UIPrefab: {fileID: 4570988585872243248, guid: 00448c5c38cef294d849b4cf6d0c6965, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.InputFieldHelper
     Comment: "\u6587\u672C\u8F93\u5165\u6846\uFF0C\u901A\u5E38\u7531\u8F93\u5165\u6846\u80CC\u666F\u56FE\u3001\u63D0\u793A\u6587\u672C\u3001\u8F93\u5165\u6587\u672C\u7EC4\u6210"
   - UIType: 15
     TypeMatches:
-    - tmpipt
-    - tmpinput
-    - tmpinputbox
-    - tmpinputfield
+    - input
     UIPrefab: {fileID: 3592617959722875999, guid: e337f73260577d14b93f65c94c11dcea, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPInputFieldHelper
     Comment: "\u6587\u672C\u8F93\u5165\u6846(Text Mesh Pro)"
   - UIType: 109
     TypeMatches:
-    - placeholder
-    - ipttips
     - tips
-    - inputtips
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u8F93\u5165\u6846\u5185\u7684\u63D0\u793A\u6587\u672C"
@@ -202,26 +160,18 @@ MonoBehaviour:
     TypeMatches:
     - ipttxt
     - ipttext
-    - iptlb
-    - iptlabel
-    - inputtext
-    - inputlabel
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u8F93\u5165\u6846\u8F93\u5165\u7684\u6587\u672C(\u6837\u5F0F)"
   - UIType: 7
     TypeMatches:
-    - tg
-    - toggle
-    - checkbox
+    - oldtoggle
     UIPrefab: {fileID: 4828739222813654848, guid: 66329988bd135fd49bf0d5927b882f6c, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ToggleHelper
     Comment: "\u5355\u9009\u6846/\u590D\u9009\u6846"
   - UIType: 16
     TypeMatches:
-    - tmptg
-    - tmptoggle
-    - tmpcheckbox
+    - toggle
     UIPrefab: {fileID: 4828739222813654848, guid: e221135e4d6e6e5479f64351d4de16bb, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.TMPToggleHelper
     Comment: "\u52FE\u9009\u6846/\u5355\u9009\u6846/\u590D\u9009\u6846(Text Mesh
@@ -229,23 +179,17 @@ MonoBehaviour:
   - UIType: 111
     TypeMatches:
     - mark
-    - tgmark
-    - togglemark
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u52FE\u9009\u6846\uFF0C\u52FE\u9009\u72B6\u6001\u56FE\u6807"
   - UIType: 112
     TypeMatches:
-    - tglb
     - tgtxt
-    - toggletext
-    - togglelabel
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u52FE\u9009\u6846\u6587\u672C"
   - UIType: 8
     TypeMatches:
-    - sld
     - slider
     UIPrefab: {fileID: 3439118813606271523, guid: fe19cbe4c01b78945a8888d2bdd61306, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.SliderHelper
@@ -253,16 +197,12 @@ MonoBehaviour:
   - UIType: 113
     TypeMatches:
     - fill
-    - sldfill
-    - sliderfill
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u6ED1\u52A8\u6761/\u8FDB\u5EA6\u6761\u7684\u586B\u5145\u6761"
   - UIType: 114
     TypeMatches:
     - handle
-    - sldhandle
-    - sliderhandle
     UIPrefab: {fileID: 0}
     UIHelper: 
     Comment: "\u6ED1\u52A8\u6761\u7684\u62D6\u52A8\u6ED1\u5757"

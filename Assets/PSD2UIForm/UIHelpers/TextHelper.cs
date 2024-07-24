@@ -13,7 +13,8 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class TextHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode text;
+        [SerializeField]
+        private PsdLayerNode text;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -25,15 +26,15 @@ namespace UGF.EditorTools.Psd2UGUI
             if (LayerNode.IsTextLayer(out var _))
                 text = LayerNode;
             else
-                LayerNode.SetUIType(UGUIParser.Instance.DefaultImage);
+                LayerNode.SetUIType(GUIType.Image);
         }
 
         protected override void InitUIElements(GameObject uiRoot)
         {
             var textCom = uiRoot.GetComponentInChildren<Text>();
-            UGUIParser.SetTextStyle(text, textCom);
+            text.SetTextStyle(textCom);
 
-            UGUIParser.SetRectTransform(text, textCom);
+            text.SetRectTransform(textCom);
         }
     }
 }

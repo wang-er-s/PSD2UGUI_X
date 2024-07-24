@@ -13,7 +13,8 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class RawImageHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode rawImage;
+        [SerializeField]
+        private PsdLayerNode rawImage;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -28,8 +29,8 @@ namespace UGF.EditorTools.Psd2UGUI
         protected override void InitUIElements(GameObject uiRoot)
         {
             var imgCom = uiRoot.GetComponentInChildren<RawImage>();
-            UGUIParser.SetRectTransform(rawImage, imgCom);
-            imgCom.texture = UGUIParser.LayerNode2Texture(rawImage);
+            rawImage.SetRectTransform(imgCom);
+            imgCom.texture = rawImage.LayerNode2Texture();
         }
     }
 }

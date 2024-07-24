@@ -13,9 +13,14 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class InputFieldHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode background;
-        [SerializeField] private PsdLayerNode placeholder;
-        [SerializeField] private PsdLayerNode text;
+        [SerializeField]
+        private PsdLayerNode background;
+
+        [SerializeField]
+        private PsdLayerNode placeholder;
+
+        [SerializeField]
+        private PsdLayerNode text;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -32,12 +37,12 @@ namespace UGF.EditorTools.Psd2UGUI
         protected override void InitUIElements(GameObject uiRoot)
         {
             var input = uiRoot.GetComponent<InputField>();
-            UGUIParser.SetRectTransform(background, input);
+            background.SetRectTransform(input);
 
             var bgImage = input.targetGraphic as Image;
-            bgImage.sprite = UGUIParser.LayerNode2Sprite(background, bgImage.type == Image.Type.Sliced);
-            UGUIParser.SetTextStyle(placeholder, input.placeholder as Text);
-            UGUIParser.SetTextStyle(text, input.textComponent);
+            bgImage.sprite = background.LayerNode2Sprite();
+            placeholder.SetTextStyle(input.placeholder as Text);
+            text.SetTextStyle(input.textComponent);
         }
     }
 }

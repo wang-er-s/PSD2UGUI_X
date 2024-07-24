@@ -14,15 +14,24 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class TMPButtonHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode background;
-        [SerializeField] private PsdLayerNode text;
+        [SerializeField]
+        private PsdLayerNode background;
 
-        [Header("Sprite Swap:")] [SerializeField]
+        [SerializeField]
+        private PsdLayerNode text;
+
+        [Header("Sprite Swap:")]
+        [SerializeField]
         private PsdLayerNode highlight;
 
-        [SerializeField] private PsdLayerNode press;
-        [SerializeField] private PsdLayerNode select;
-        [SerializeField] private PsdLayerNode disable;
+        [SerializeField]
+        private PsdLayerNode press;
+
+        [SerializeField]
+        private PsdLayerNode select;
+
+        [SerializeField]
+        private PsdLayerNode disable;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -31,7 +40,7 @@ namespace UGF.EditorTools.Psd2UGUI
 
         public override void ParseAndAttachUIElements()
         {
-            background = LayerNode.FindSubLayerNode(GUIType.Background, GUIType.Image, GUIType.RawImage);
+            background = LayerNode;
             text = LayerNode.FindSubLayerNode(GUIType.Button_Text, GUIType.TMPText, GUIType.Text);
             highlight = LayerNode.FindSubLayerNode(GUIType.Button_Highlight);
             press = LayerNode.FindSubLayerNode(GUIType.Button_Press);
@@ -43,20 +52,26 @@ namespace UGF.EditorTools.Psd2UGUI
         {
             var button = uiRoot.GetComponent<Button>();
             var btImg = button.GetComponent<Image>();
-            var useSliceSp = btImg.type == Image.Type.Sliced;
-            btImg.sprite = UGUIParser.LayerNode2Sprite(background, useSliceSp);
-            UGUIParser.SetRectTransform(background, button);
-            UGUIParser.SetTextStyle(text, uiRoot.GetComponentInChildren<TextMeshProUGUI>());
+            btImg.sprite = background.LayerNode2Sprite();
+            background.SetRectTransform(button);
+            if (text == null)
+            {
+                DestroyImmediate(uiRoot.GetComponentInChildren<TextMeshProUGUI>().gameObject);
+            }
+            else
+            {
+                text.SetTextStyle(uiRoot.GetComponentInChildren<TextMeshProUGUI>());
+            }
 
             var useSpriteSwap = highlight != null || press != null || select != null || disable != null;
             button.transition = useSpriteSwap ? Selectable.Transition.SpriteSwap : Selectable.Transition.ColorTint;
             if (button.transition == Selectable.Transition.SpriteSwap)
             {
                 var spState = new SpriteState();
-                spState.highlightedSprite = UGUIParser.LayerNode2Sprite(highlight, useSliceSp);
-                spState.pressedSprite = UGUIParser.LayerNode2Sprite(press, useSliceSp);
-                spState.selectedSprite = UGUIParser.LayerNode2Sprite(select, useSliceSp);
-                spState.disabledSprite = UGUIParser.LayerNode2Sprite(disable, useSliceSp);
+                spState.highlightedSprite = highlight.LayerNode2Sprite();
+                spState.pressedSprite = press.LayerNode2Sprite();
+                spState.selectedSprite = select.LayerNode2Sprite();
+                spState.disabledSprite = disable.LayerNode2Sprite();
                 button.spriteState = spState;
             }
         }

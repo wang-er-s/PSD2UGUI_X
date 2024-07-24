@@ -13,9 +13,14 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class SliderHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode background;
-        [SerializeField] private PsdLayerNode fill;
-        [SerializeField] private PsdLayerNode handle;
+        [SerializeField]
+        private PsdLayerNode background;
+
+        [SerializeField]
+        private PsdLayerNode fill;
+
+        [SerializeField]
+        private PsdLayerNode handle;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -32,12 +37,12 @@ namespace UGF.EditorTools.Psd2UGUI
         protected override void InitUIElements(GameObject uiRoot)
         {
             var slider = uiRoot.GetComponent<Slider>();
-            UGUIParser.SetRectTransform(background, slider);
+            background.SetRectTransform(slider);
 
             var bg = uiRoot.transform.Find("Background")?.GetComponent<Image>();
-            if (bg != null) bg.sprite = UGUIParser.LayerNode2Sprite(background, bg.type == Image.Type.Sliced);
+            if (bg != null) bg.sprite = background.LayerNode2Sprite();
             var fillImg = slider.fillRect?.GetComponent<Image>();
-            if (fillImg != null) fillImg.sprite = UGUIParser.LayerNode2Sprite(fill, fillImg.type == Image.Type.Sliced);
+            if (fillImg != null) fillImg.sprite = fill.LayerNode2Sprite();
             var handleImg = slider.handleRect?.GetComponent<Image>();
             if (handleImg != null)
             {
@@ -45,8 +50,8 @@ namespace UGF.EditorTools.Psd2UGUI
                 handleImg.gameObject.SetActive(!noHandle);
                 slider.transition = noHandle ? Selectable.Transition.None : Selectable.Transition.ColorTint;
                 slider.interactable = !noHandle;
-                UGUIParser.LayerNode2Sprite(handle, handleImg.type == Image.Type.Sliced);
-                UGUIParser.SetRectTransform(handle, handleImg, false);
+                handle.LayerNode2Sprite();
+                handle.SetRectTransform(handleImg, false);
             }
         }
     }

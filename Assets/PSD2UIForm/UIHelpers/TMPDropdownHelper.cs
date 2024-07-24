@@ -14,11 +14,20 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class TMPDropdownHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode background;
-        [SerializeField] private PsdLayerNode label;
-        [SerializeField] private PsdLayerNode arrow;
-        [SerializeField] private PsdLayerNode scrollView;
-        [SerializeField] private PsdLayerNode toggleItem;
+        [SerializeField]
+        private PsdLayerNode background;
+
+        [SerializeField]
+        private PsdLayerNode label;
+
+        [SerializeField]
+        private PsdLayerNode arrow;
+
+        [SerializeField]
+        private PsdLayerNode scrollView;
+
+        [SerializeField]
+        private PsdLayerNode toggleItem;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -37,17 +46,17 @@ namespace UGF.EditorTools.Psd2UGUI
         protected override void InitUIElements(GameObject uiRoot)
         {
             var dpd = uiRoot.GetComponent<TMP_Dropdown>();
-            UGUIParser.SetRectTransform(background, dpd);
+            background.SetRectTransform(dpd);
             var bgImg = dpd.targetGraphic as Image;
-            bgImg.sprite = UGUIParser.LayerNode2Sprite(background, bgImg.type == Image.Type.Sliced) ?? bgImg.sprite;
+            bgImg.sprite = background.LayerNode2Sprite() ?? bgImg.sprite;
 
-            UGUIParser.SetTextStyle(label, dpd.captionText as TextMeshProUGUI);
-            UGUIParser.SetRectTransform(label, dpd.captionText);
+            label.SetTextStyle(dpd.captionText as TextMeshProUGUI);
+            label.SetRectTransform(dpd.captionText);
             var arrowImg = dpd.transform.Find("Arrow")?.GetComponent<Image>();
             if (arrowImg != null)
             {
-                UGUIParser.SetRectTransform(arrow, arrowImg);
-                arrowImg.sprite = UGUIParser.LayerNode2Sprite(arrow, arrowImg.type == Image.Type.Sliced);
+                arrow.SetRectTransform(arrowImg);
+                arrowImg.sprite = arrow.LayerNode2Sprite();
             }
 
             if (scrollView != null)
@@ -57,7 +66,7 @@ namespace UGF.EditorTools.Psd2UGUI
                 if (sViewGo != null)
                 {
                     var sViewRect = sViewGo.GetComponent<RectTransform>();
-                    UGUIParser.SetRectTransform(scrollView, sViewRect);
+                    scrollView.SetRectTransform(sViewRect);
                     sViewRect.anchorMin = Vector2.zero;
                     sViewRect.anchorMax = new Vector2(1, 0);
                     sViewRect.anchoredPosition = new Vector2(0, -2);

@@ -7,6 +7,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Aspose.PSD;
@@ -15,6 +16,7 @@ using Aspose.PSD.FileFormats.Psd.Layers;
 using Aspose.PSD.FileFormats.Psd.Layers.SmartObjects;
 using Aspose.PSD.ImageLoadOptions;
 using HarmonyLib;
+using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -130,8 +132,6 @@ namespace UGF.EditorTools.Psd2UGUI
                 if (GUILayout.Button(parsePsd2NodesBt, btHeight))
                     Psd2UIFormConverter.ParsePsd2LayerPrefab(targetLogic.PsdAssetName, targetLogic);
 
-                if (GUILayout.Button(exportUISpritesBt, btHeight)) targetLogic.ExportSprites();
-
                 EditorGUILayout.EndHorizontal();
             }
             if (GUILayout.Button(generateUIFormBt, btHeight)) targetLogic.GenerateUIForm();
@@ -161,11 +161,25 @@ namespace UGF.EditorTools.Psd2UGUI
         private const string RecordLayerOperation = "Change Export Image";
 
         private static bool licenseInited;
-        [ReadOnlyField] [SerializeField] public string psdAssetChangeTime; //文件修改时间标识
-        [Tooltip("UIForm名字")] [SerializeField] private string uiFormName;
-        [Tooltip("关联的psd文件")] [SerializeField] private Sprite psdAsset;
-        [Header("Debug:")] [SerializeField] private bool drawLayerRectGizmos = true;
-        [SerializeField] private Color drawLayerRectGizmosColor = Color.green;
+
+        [ReadOnly]
+        [SerializeField]
+        public string psdAssetChangeTime; //文件修改时间标识
+
+        [Tooltip("UIForm名字")]
+        [SerializeField]
+        private string uiFormName;
+
+        [Tooltip("关联的psd文件")]
+        [SerializeField]
+        private Sprite psdAsset;
+
+        [Header("Debug:")]
+        [SerializeField]
+        private bool drawLayerRectGizmos = true;
+
+        [SerializeField]
+        private Color drawLayerRectGizmosColor = Color.green;
 
         private PsdImage psdInstance; //psd文件解析实例
         private GUIStyle uiTypeLabelStyle;
@@ -253,10 +267,10 @@ namespace UGF.EditorTools.Psd2UGUI
             Undo.RecordObject(layer, RecordLayerOperation);
             EditorGUI.BeginChangeCheck();
             {
-                layer.markToExport = EditorGUI.Toggle(tmpRect, layer.markToExport);
+                layer.MarkToExportImage = EditorGUI.Toggle(tmpRect, layer.MarkToExportImage);
                 if (EditorGUI.EndChangeCheck())
                 {
-                    if (Selection.gameObjects.Length > 1) SetExportImageTg(Selection.gameObjects, layer.markToExport);
+                    if (Selection.gameObjects.Length > 1) SetExportImageTg(Selection.gameObjects, layer.MarkToExportImage);
                     EditorUtility.SetDirty(layer);
                 }
             }
@@ -296,7 +310,7 @@ namespace UGF.EditorTools.Psd2UGUI
         private void SetExportImageTg(GameObject[] selects, bool exportImg)
         {
             var selectLayerNodes = selects.Where(item => item?.GetComponent<PsdLayerNode>() != null).ToArray();
-            foreach (var layer in selectLayerNodes) layer.GetComponent<PsdLayerNode>().markToExport = exportImg;
+            foreach (var layer in selectLayerNodes) layer.GetComponent<PsdLayerNode>().MarkToExportImage = exportImg;
         }
 
         private void RefreshNodesBindLayer()
@@ -309,10 +323,11 @@ namespace UGF.EditorTools.Psd2UGUI
                     return;
                 }
 
+                // 暂时改成readonly模式，
                 var psdOpts = new PsdLoadOptions
                 {
                     LoadEffectsResource = true,
-                    ReadOnlyMode = false
+                    ReadOnlyMode = false,
                 };
                 try
                 {
@@ -337,7 +352,7 @@ namespace UGF.EditorTools.Psd2UGUI
         {
             if (Selection.activeObject == null) return;
             var assetPath = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (Path.GetExtension(assetPath).ToLower().CompareTo(".psd") != 0)
+            if (String.Compare(Path.GetExtension(assetPath).ToLower(), ".psd", StringComparison.Ordinal) != 0)
             {
                 Debug.LogWarning($"选择的文件({assetPath})不是psd格式, 工具只支持psd转换为UIForm");
                 return;
@@ -378,7 +393,6 @@ namespace UGF.EditorTools.Psd2UGUI
         /// <summary>
         ///     把Psd图层解析成节点prefab
         /// </summary>
-        /// <param name="psdPath"></param>
         /// <returns></returns>
         public static bool ParsePsd2LayerPrefab(string psdFile, Psd2UIFormConverter instanceRoot = null)
         {
@@ -443,6 +457,7 @@ namespace UGF.EditorTools.Psd2UGUI
                         var layer = psd.Layers[i];
                         if (layer.Name.StartsWith("#")) continue;
                         var curLayerType = layer.GetLayerType();
+                        // 组开始
                         if (curLayerType == PsdLayerType.SectionDividerLayer)
                         {
                             var layerGroup = (layer as SectionDividerLayer).GetRelatedLayerGroup();
@@ -450,6 +465,7 @@ namespace UGF.EditorTools.Psd2UGUI
                             var layerGropNode = CreatePsdLayerNode(layerGroup, layerGroupIdx);
                             layerNodes.Add(layerGropNode.gameObject);
                         }
+                        // 组结束
                         else if (curLayerType == PsdLayerType.LayerGroup)
                         {
                             var lastLayerNode = layerNodes.Last();
@@ -543,45 +559,27 @@ namespace UGF.EditorTools.Psd2UGUI
             layerNode.BindPsdLayer = layer;
             if (UGUIParser.Instance.TryParse(layerNode, out var initRule)) layerNode.SetUIType(initRule.UIType, false);
 
-            layerNode.markToExport = layerTp != PsdLayerType.LayerGroup && !(layerTp == PsdLayerType.TextLayer &&
-                                                                             layerNode.UIType.ToString()
-                                                                                 .EndsWith("Text") &&
-                                                                             layerNode.UIType != GUIType.FillColor);
-            layerNode.gameObject.SetActive(layer.IsVisible);
-        }
-
-        /// <summary>
-        ///     导出psd图层为Sprites碎图
-        /// </summary>
-        /// <param name="psdAssetName"></param>
-        internal void ExportSprites()
-        {
-            //var pngOpts = new PngOptions()
-            //{
-            //    ColorType = Aspose.PSD.FileFormats.Png.PngColorType.Truecolor
-            //};
-            //this.psdInstance.Save("Assets/AAAGame/Sprites/UI/Preview.png", pngOpts);
-
-            //return;
-            var exportLayers = GetComponentsInChildren<PsdLayerNode>().Where(node => node.NeedExportImage());
-            var exportDir = GetUIFormImagesOutputDir();
-            if (!Directory.Exists(exportDir)) Directory.CreateDirectory(exportDir);
-
-            var exportIdx = 0;
-            var totalCount = exportLayers.Count();
-            foreach (var layer in exportLayers)
+            bool IsNeedToExportImage()
             {
-                var assetName = layer.ExportImageAsset();
-                if (assetName == null)
-                    Debug.LogWarning($"导出图层[name:{layer.name}, layerIdx:{layer.BindPsdLayerIndex}]图片失败!");
+                if (layerTp == PsdLayerType.LayerGroup)
+                {
+                    return false;
+                }
 
-                ++exportIdx;
-                EditorUtility.DisplayProgressBar($"导出进度({exportIdx}/{totalCount})", $"导出UI图片:{assetName}",
-                    exportIdx / (float)totalCount);
+                if (layerTp == PsdLayerType.TextLayer)
+                {
+                    if (layerNode.UIType.ToString().Contains("Text"))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
-            EditorUtility.ClearProgressBar();
-            AssetDatabase.Refresh();
+
+            layerNode.MarkToExportImage = IsNeedToExportImage();
+            layerNode.gameObject.SetActive(layer.IsVisible);
         }
 
         /// <summary>
@@ -756,62 +754,6 @@ namespace UGF.EditorTools.Psd2UGUI
             }
 
             return uiHelpers;
-        }
-
-        /// <summary>
-        ///     把图片设置为为Sprite或Texture类型
-        /// </summary>
-        /// <param name="dir"></param>
-        public static void ConvertTexturesType(string[] texAssets, bool isImage = true)
-        {
-            foreach (var item in texAssets)
-            {
-                var texImporter = AssetImporter.GetAtPath(item) as TextureImporter;
-                if (texImporter == null)
-                {
-                    Debug.LogError($"TextureImporter为空:{item}");
-                    continue;
-                }
-
-                if (isImage)
-                {
-                    texImporter.textureType = TextureImporterType.Sprite;
-                    texImporter.spriteImportMode = SpriteImportMode.Single;
-                    texImporter.alphaSource = TextureImporterAlphaSource.FromInput;
-                    texImporter.alphaIsTransparency = true;
-                    texImporter.mipmapEnabled = false;
-                }
-                else
-                {
-                    texImporter.textureType = TextureImporterType.Default;
-                    texImporter.textureShape = TextureImporterShape.Texture2D;
-                    texImporter.alphaSource = TextureImporterAlphaSource.FromInput;
-                    texImporter.alphaIsTransparency = true;
-                    texImporter.mipmapEnabled = false;
-                }
-
-                texImporter.SaveAndReimport();
-            }
-        }
-
-        /// <summary>
-        ///     压缩图片文件
-        /// </summary>
-        /// <param name="asset">文件名(相对路径Assets)</param>
-        /// <returns></returns>
-        public static bool CompressImageFile(string asset)
-        {
-            var assetPath = asset.StartsWith("Assets/")
-                ? Path.GetFullPath(asset, Directory.GetParent(Application.dataPath).FullName)
-                : asset;
-            var compressTool = Utility.Assembly.GetType("UGF.EditorTools.CompressTool");
-            if (compressTool == null) return false;
-
-            var compressMethod =
-                compressTool.GetMethod("CompressImageOffline", new[] { typeof(string), typeof(string) });
-            if (compressMethod == null) return false;
-
-            return (bool)compressMethod.Invoke(null, new object[] { assetPath, assetPath });
         }
 
         /// <summary>

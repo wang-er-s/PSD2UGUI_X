@@ -13,12 +13,23 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class ScrollViewHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode background;
-        [SerializeField] private PsdLayerNode viewport;
-        [SerializeField] private PsdLayerNode horizontalBarBG;
-        [SerializeField] private PsdLayerNode horizontalBar;
-        [SerializeField] private PsdLayerNode verticalBarBG;
-        [SerializeField] private PsdLayerNode verticalBar;
+        [SerializeField]
+        private PsdLayerNode background;
+
+        [SerializeField]
+        private PsdLayerNode viewport;
+
+        [SerializeField]
+        private PsdLayerNode horizontalBarBG;
+
+        [SerializeField]
+        private PsdLayerNode horizontalBar;
+
+        [SerializeField]
+        private PsdLayerNode verticalBarBG;
+
+        [SerializeField]
+        private PsdLayerNode verticalBar;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -39,11 +50,11 @@ namespace UGF.EditorTools.Psd2UGUI
         protected override void InitUIElements(GameObject uiRoot)
         {
             var listView = uiRoot.GetComponent<ScrollRect>();
-            UGUIParser.SetRectTransform(background, listView);
+            background.SetRectTransform(listView);
             var bgCom = listView.GetComponent<Image>();
             if (bgCom != null)
             {
-                bgCom.sprite = UGUIParser.LayerNode2Sprite(background, bgCom.type == Image.Type.Sliced);
+                bgCom.sprite = background.LayerNode2Sprite();
                 if (viewport == null)
                 {
                     var maskImg = listView.viewport.GetComponent<Image>();
@@ -54,7 +65,7 @@ namespace UGF.EditorTools.Psd2UGUI
             if (viewport != null)
             {
                 var maskImg = listView.viewport.GetComponent<Image>();
-                maskImg.sprite = UGUIParser.LayerNode2Sprite(viewport, maskImg.type == Image.Type.Sliced);
+                maskImg.sprite = viewport.LayerNode2Sprite();
             }
 
             var hbar = listView.horizontalScrollbar;
@@ -63,8 +74,8 @@ namespace UGF.EditorTools.Psd2UGUI
             if (horizontalBarBG != null && hbar != null)
             {
                 var hbarBg = hbar.GetComponent<Image>();
-                hbarBg.sprite = UGUIParser.LayerNode2Sprite(horizontalBarBG, hbarBg.type == Image.Type.Sliced);
-                UGUIParser.SetRectTransform(horizontalBarBG, hbarBg, false, false);
+                hbarBg.sprite = horizontalBarBG.LayerNode2Sprite();
+                horizontalBarBG.SetRectTransform(hbarBg, false, false);
                 var hbarRect = hbar.GetComponent<RectTransform>();
                 hbarRect.anchorMin = new Vector2(1, 0);
                 hbarRect.anchorMax = Vector2.one;
@@ -79,8 +90,8 @@ namespace UGF.EditorTools.Psd2UGUI
             if (verticalBarBG != null && vbar != null)
             {
                 var vbarBg = vbar.GetComponent<Image>();
-                vbarBg.sprite = UGUIParser.LayerNode2Sprite(verticalBarBG, vbarBg.type == Image.Type.Sliced);
-                UGUIParser.SetRectTransform(verticalBarBG, vbarBg, false, true, false);
+                vbarBg.sprite = verticalBarBG.LayerNode2Sprite();
+                verticalBarBG.SetRectTransform(vbarBg, false, true, false);
                 var vbarRect = vbar.GetComponent<RectTransform>();
                 vbarRect.anchorMin = new Vector2(1, 0);
                 vbarRect.anchorMax = Vector2.one;
@@ -95,15 +106,15 @@ namespace UGF.EditorTools.Psd2UGUI
             if (horizontalBar != null && hbar != null)
             {
                 var hbarHandle = hbar.targetGraphic as Image;
-                hbarHandle.sprite = UGUIParser.LayerNode2Sprite(horizontalBar, hbarHandle.type == Image.Type.Sliced);
-                //UGUIParser.SetRectTransform(horizontalBar, hbarHandle, false, true, true);
+                hbarHandle.sprite = horizontalBar.LayerNode2Sprite();
+                //horizontalBar.SetRectTransform( hbarHandle, false, true, true);
             }
 
             if (verticalBar != null && vbar != null)
             {
                 var vbarHandle = vbar.targetGraphic as Image;
-                vbarHandle.sprite = UGUIParser.LayerNode2Sprite(verticalBar, vbarHandle.type == Image.Type.Sliced);
-                //UGUIParser.SetRectTransform(verticalBar, vbarHandle, false, true, true);
+                vbarHandle.sprite = verticalBar.LayerNode2Sprite();
+                //verticalBar.SetRectTransform( vbarHandle, false, true, true);
             }
         }
     }

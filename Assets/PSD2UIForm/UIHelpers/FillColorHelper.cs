@@ -13,7 +13,8 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class FillColorHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode fillColor;
+        [SerializeField]
+        private PsdLayerNode fillColor;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -22,20 +23,20 @@ namespace UGF.EditorTools.Psd2UGUI
 
         public override void ParseAndAttachUIElements()
         {
-            if (LayerNode.LayerType != PsdLayerType.FillLayer)
-            {
-                LayerNode.SetUIType(UGUIParser.Instance.DefaultImage);
-                return;
-            }
-
+            // if (LayerNode.LayerType != PsdLayerType.FillLayer)
+            // {
+            //     LayerNode.SetUIType(GUIType.Image);
+            //     return;
+            // }
+            //
             fillColor = LayerNode;
         }
 
         protected override void InitUIElements(GameObject uiRoot)
         {
             var imgCom = uiRoot.GetComponentInChildren<RawImage>();
-            UGUIParser.SetRectTransform(fillColor, imgCom);
-            imgCom.color = UGUIParser.LayerNode2Color(fillColor, imgCom.color);
+            fillColor.SetRectTransform(imgCom);
+            imgCom.color = fillColor.LayerNode2Color(imgCom.color);
         }
     }
 }

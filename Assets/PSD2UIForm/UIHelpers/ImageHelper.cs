@@ -13,7 +13,8 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class ImageHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode image;
+        [SerializeField]
+        private PsdLayerNode image;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -28,8 +29,18 @@ namespace UGF.EditorTools.Psd2UGUI
         protected override void InitUIElements(GameObject uiRoot)
         {
             var imgCom = uiRoot.GetComponentInChildren<Image>();
-            UGUIParser.SetRectTransform(image, imgCom);
-            imgCom.sprite = UGUIParser.LayerNode2Sprite(image, imgCom.type == Image.Type.Sliced);
+            image.SetRectTransform(imgCom);
+            imgCom.sprite = image.LayerNode2Sprite();
+            if (IsSlicedSprite(imgCom.sprite))
+            {
+                imgCom.type = Image.Type.Sliced;
+            }
+        }
+        
+        private static bool IsSlicedSprite(Sprite sprite)
+        {
+            Vector4 border = sprite.border;
+            return border.x > 0 || border.y > 0 || border.z > 0 || border.w > 0;
         }
     }
 }

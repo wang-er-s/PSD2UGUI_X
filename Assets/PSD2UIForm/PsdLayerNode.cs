@@ -5,7 +5,6 @@
  */
 
 #if UNITY_EDITOR
-using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -14,7 +13,6 @@ using Aspose.PSD.FileFormats.Psd;
 using Aspose.PSD.FileFormats.Psd.Layers;
 using Aspose.PSD.FileFormats.Psd.Layers.SmartObjects;
 using Aspose.PSD.ImageOptions;
-using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,7 +29,7 @@ namespace UGF.EditorTools.Psd2UGUI
             targetLogic = target as PsdLayerNode;
             targetLogic.RefreshLayerTexture();
         }
-
+        
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
@@ -40,18 +38,6 @@ namespace UGF.EditorTools.Psd2UGUI
             {
                 targetLogic.UIType = (GUIType)EditorGUILayout.EnumPopup("UI Type", targetLogic.UIType);
                 if (EditorGUI.EndChangeCheck()) targetLogic.SetUIType(targetLogic.UIType);
-            }
-            EditorGUILayout.BeginHorizontal();
-            {
-                if (GUILayout.Button("导出图片"))
-                    foreach (var item in targets)
-                    {
-                        if (item == null) continue;
-
-                        (item as PsdLayerNode)?.ExportImageAsset();
-                    }
-
-                EditorGUILayout.EndHorizontal();
             }
             serializedObject.ApplyModifiedProperties();
         }
@@ -78,12 +64,20 @@ namespace UGF.EditorTools.Psd2UGUI
 
     [ExecuteInEditMode]
     [DisallowMultipleComponent]
-    public class PsdLayerNode : MonoBehaviour
+    public partial class PsdLayerNode : MonoBehaviour
     {
-        [ReadOnlyField] public int BindPsdLayerIndex = -1;
-        [ReadOnlyField] [SerializeField] private PsdLayerType mLayerType = PsdLayerType.Unknown;
-        [SerializeField] public bool markToExport;
-        [HideInInspector] public GUIType UIType;
+        [ReadOnlyField]
+        public int BindPsdLayerIndex = -1;
+
+        [ReadOnlyField]
+        [SerializeField]
+        private PsdLayerType mLayerType = PsdLayerType.Unknown;
+
+        [SerializeField]
+        public bool MarkToExportImage;
+
+        [HideInInspector]
+        public GUIType UIType;
 
         /// <summary>
         ///     绑定的psd图层
@@ -160,58 +154,7 @@ namespace UGF.EditorTools.Psd2UGUI
         /// <returns></returns>
         public bool NeedExportImage()
         {
-            return gameObject.activeSelf && markToExport;
-        }
-
-        /// <summary>
-        ///     导出图片
-        /// </summary>
-        /// <param name="forceSpriteType">强制贴图类型为Sprite</param>
-        /// <returns></returns>
-        public string ExportImageAsset(bool forceSpriteType = false)
-        {
-            string assetName = null;
-            if (RefreshLayerTexture())
-            {
-                var bytes = PreviewTexture.EncodeToPNG();
-                var imgName = string.Format("{0}_{1}", string.IsNullOrWhiteSpace(name) ? UIType.ToString() : name,
-                    BindPsdLayerIndex);
-                if (IsSingleImg()) imgName = GetName();
-
-                var exportDir = Psd2UIFormConverter.Instance.GetUIFormImagesOutputDir();
-                if (!Directory.Exists(exportDir))
-                    try
-                    {
-                        Directory.CreateDirectory(exportDir);
-                        AssetDatabase.Refresh();
-                    }
-                    catch (Exception)
-                    {
-                        return null;
-                    }
-
-                var imgFileName = Path.Combine(exportDir, imgName + ".png");
-                if (!File.Exists(imgFileName))
-                    File.WriteAllBytes(imgFileName, bytes);
-                //if (Psd2UIFormSettings.Instance.CompressImage)
-                //{
-                //    bool compressResult = Psd2UIFormConverter.CompressImageFile(imgFileName);
-                //    if (compressResult)
-                //    {
-                //        Debug.Log($"成功压缩图片:{imgFileName}");
-                //    }
-                //    else
-                //    {
-                //        Debug.LogWarning($"压缩图片失败:{imgFileName}");
-                //    }
-                //}
-                assetName = imgFileName;
-                var isImage = !(UIType == GUIType.FillColor || UIType == GUIType.RawImage);
-                AssetDatabase.Refresh();
-                Psd2UIFormConverter.ConvertTexturesType(new[] { imgFileName }, isImage || forceSpriteType);
-            }
-
-            return assetName;
+            return gameObject.activeSelf && MarkToExportImage;
         }
 
         public string GetName()
@@ -353,57 +296,6 @@ namespace UGF.EditorTools.Psd2UGUI
             var layers = psdInstance.Layers;
             if (BindPsdLayerIndex >= 0 && BindPsdLayerIndex < layers.Length)
                 BindPsdLayer = psdInstance.Layers[BindPsdLayerIndex];
-        }
-
-        internal bool ParseTextLayerInfo(out string text, out int fontSize, out float characterSpace,
-            out float lineSpace, out Color fontColor, out FontStyle fontStyle,
-            out FontStyles tmpFontStyle, out string fontName)
-        {
-            text = null;
-            fontSize = 0;
-            characterSpace = 0f;
-            lineSpace = 0f;
-            fontColor = Color.white;
-            fontStyle = FontStyle.Normal;
-            tmpFontStyle = FontStyles.Normal;
-            fontName = null;
-            if (IsTextLayer(out var txtLayer))
-            {
-                text = txtLayer.Text;
-                fontSize = (int)(txtLayer.Font.Size * txtLayer.TransformMatrix[3]);
-                fontColor = new Color(txtLayer.TextColor.R, txtLayer.TextColor.G, txtLayer.TextColor.B,
-                    txtLayer.Opacity) / 255;
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold) &&
-                    txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic))
-                    fontStyle = FontStyle.BoldAndItalic;
-                else if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold))
-                    fontStyle = FontStyle.Bold;
-                else if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic))
-                    fontStyle = FontStyle.Italic;
-                else
-                    fontStyle = FontStyle.Normal;
-
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Italic)) tmpFontStyle |= FontStyles.Italic;
-
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Bold)) tmpFontStyle |= FontStyles.Bold;
-
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Underline)) tmpFontStyle |= FontStyles.Underline;
-
-                if (txtLayer.Font.Style.HasFlag(Aspose.PSD.FontStyle.Strikeout))
-                    tmpFontStyle |= FontStyles.Strikethrough;
-
-                fontName = txtLayer.Font.Name;
-                if (txtLayer.TextData.Items.Length > 0)
-                {
-                    var txtData = txtLayer.TextData.Items[0];
-                    characterSpace = txtData.Style.Tracking * 0.1f;
-                    lineSpace = (float)txtData.Style.Leading * 0.1f;
-                }
-
-                return true;
-            }
-
-            return false;
         }
     }
 }

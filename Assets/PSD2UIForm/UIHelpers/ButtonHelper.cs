@@ -13,15 +13,24 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class ButtonHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode background;
-        [SerializeField] private PsdLayerNode text;
+        [SerializeField]
+        private PsdLayerNode background;
 
-        [Header("Sprite Swap:")] [SerializeField]
+        [SerializeField]
+        private PsdLayerNode text;
+
+        [Header("Sprite Swap:")]
+        [SerializeField]
         private PsdLayerNode highlight;
 
-        [SerializeField] private PsdLayerNode press;
-        [SerializeField] private PsdLayerNode select;
-        [SerializeField] private PsdLayerNode disable;
+        [SerializeField]
+        private PsdLayerNode press;
+
+        [SerializeField]
+        private PsdLayerNode select;
+
+        [SerializeField]
+        private PsdLayerNode disable;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -49,21 +58,20 @@ namespace UGF.EditorTools.Psd2UGUI
         {
             var button = uiRoot.GetComponent<Button>();
             var btImg = button.GetComponent<Image>();
-            var useSliceSp = btImg.type == Image.Type.Sliced;
-            btImg.sprite = UGUIParser.LayerNode2Sprite(background, useSliceSp);
-            UGUIParser.SetRectTransform(background, button);
+            btImg.sprite = background.LayerNode2Sprite();
+            background.SetRectTransform(button);
             var btText = uiRoot.GetComponentInChildren<Text>();
-            UGUIParser.SetTextStyle(text, btText);
-            UGUIParser.SetRectTransform(text, btText);
+            text.SetTextStyle(btText);
+            text.SetRectTransform(btText);
             var useSpriteSwap = highlight != null || press != null || select != null || disable != null;
             button.transition = useSpriteSwap ? Selectable.Transition.SpriteSwap : Selectable.Transition.ColorTint;
             if (button.transition == Selectable.Transition.SpriteSwap)
             {
                 var spState = new SpriteState();
-                spState.highlightedSprite = UGUIParser.LayerNode2Sprite(highlight, useSliceSp);
-                spState.pressedSprite = UGUIParser.LayerNode2Sprite(press, useSliceSp);
-                spState.selectedSprite = UGUIParser.LayerNode2Sprite(select, useSliceSp);
-                spState.disabledSprite = UGUIParser.LayerNode2Sprite(disable, useSliceSp);
+                spState.highlightedSprite = highlight.LayerNode2Sprite();
+                spState.pressedSprite = press.LayerNode2Sprite();
+                spState.selectedSprite = select.LayerNode2Sprite();
+                spState.disabledSprite = disable.LayerNode2Sprite();
                 button.spriteState = spState;
             }
         }

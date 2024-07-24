@@ -14,9 +14,14 @@ namespace UGF.EditorTools.Psd2UGUI
     [DisallowMultipleComponent]
     public class TMPToggleHelper : UIHelperBase
     {
-        [SerializeField] private PsdLayerNode background;
-        [SerializeField] private PsdLayerNode checkmark;
-        [SerializeField] private PsdLayerNode label;
+        [SerializeField]
+        private PsdLayerNode background;
+
+        [SerializeField]
+        private PsdLayerNode checkmark;
+
+        [SerializeField]
+        private PsdLayerNode label;
 
         public override PsdLayerNode[] GetDependencies()
         {
@@ -33,26 +38,33 @@ namespace UGF.EditorTools.Psd2UGUI
         protected override void InitUIElements(GameObject uiRoot)
         {
             var tgCom = uiRoot.GetComponent<Toggle>();
-            UGUIParser.SetRectTransform(LayerNode, tgCom);
+            LayerNode.SetRectTransform(tgCom);
 
             var bgCom = tgCom.targetGraphic as Image;
             if (bgCom != null)
             {
-                UGUIParser.SetRectTransform(background, bgCom);
-                bgCom.sprite = UGUIParser.LayerNode2Sprite(background, bgCom.type == Image.Type.Sliced);
+                background.SetRectTransform(bgCom);
+                bgCom.sprite = background.LayerNode2Sprite();
             }
 
             var markCom = tgCom.graphic as Image;
             if (markCom != null)
             {
-                UGUIParser.SetRectTransform(checkmark, markCom);
-                markCom.sprite = UGUIParser.LayerNode2Sprite(checkmark, markCom.type == Image.Type.Sliced);
+                checkmark.SetRectTransform(markCom);
+                markCom.sprite = checkmark.LayerNode2Sprite();
             }
 
             var textCom = tgCom.transform.Find("Label")?.GetComponent<TextMeshProUGUI>();
-            if (textCom != null) textCom.gameObject.SetActive(label != null);
-            UGUIParser.SetTextStyle(label, textCom);
-            UGUIParser.SetRectTransform(label, textCom);
+            if (label != null)
+            {
+                if (textCom != null) textCom.gameObject.SetActive(label != null);
+                label.SetTextStyle(textCom);
+                label.SetRectTransform(textCom);
+            }
+            else
+            {
+                Object.DestroyImmediate(textCom.gameObject);
+            }
         }
     }
 }
