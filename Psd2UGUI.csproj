@@ -12,11 +12,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{cdc1799e-cb95-71cc-d15c-c2b211177143}</ProjectGuid>
+    <ProjectGuid>{ae9827a3-2ae2-8dea-6977-de6adc417251}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Psd2UGUI</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -25,8 +25,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Temp\Bin\Debug\Assembly-CSharp\</OutputPath>
-    <DefineConstants>UNITY_2022_3_17;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;UNITY_UGP_API;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY;ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;AMPLIFY_SHADER_EDITOR;ENABLE_LOG;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <OutputPath>Temp\Bin\Debug\Psd2UGUI\</OutputPath>
+    <DefineConstants>UNITY_2022_3_17;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;UNITY_UGP_API;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY;ENABLE_MONO;NET_4_6;NET_UNITY_4_8;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;AMPLIFY_SHADER_EDITOR;ENABLE_LOG;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169,0649</NoWarn>
@@ -45,65 +45,35 @@
     <Analyzer Include="E:\Program\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\PSD2UIForm\UIStringKey.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\TMPButtonHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\FillColorHelper.cs" />
-    <Compile Include="Assets\Test.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\SliderHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\ButtonHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\ImageHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\MagicPatch.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\ScrollViewHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\ToggleHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\TMPTextHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\AsposePsdExtension.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\TMPDropdownHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\TextHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\ScriptableSignleton.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\TMPToggleHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\InputFieldHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UGUIParser.cs" />
-    <Compile Include="Assets\PSD2UIForm\PsdLayerNodeSetUI.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\RawImageHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\ReadOnlyFieldAttribute.cs" />
-    <Compile Include="Assets\PSD2UIForm\Psd2UIFormSettings.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\DropdownHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\Psd2UIFormConverter.cs" />
-    <Compile Include="Assets\PSD2UIForm\PsdLayerNode.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\TMPInputFieldHelper.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\UIHelperBase.cs" />
-    <Compile Include="Assets\PSD2UIForm\PsdLayerType.cs" />
-    <Compile Include="Assets\PSD2UIForm\UIHelpers\MaskHelper.cs" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\Sirenix\Assemblies\Sirenix.Serialization.Config.xml" />
-    <None Include="Assets\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.xml" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.xml" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\Sirenix\Assemblies\Sirenix.Utilities.xml" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\Sirenix\Readme.txt" />
-    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\Sirenix\Assemblies\link.xml" />
-    <None Include="Assets\Sirenix\Assemblies\Sirenix.Utilities.Editor.xml" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\Sirenix\Assemblies\Sirenix.Serialization.xml" />
-    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
-    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\SliderHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\ButtonHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\TMPToggleHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\PreviewWindow.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\LayerComponent.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\TMPTextHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\ScrollViewHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\TMPInputFieldHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UGUIParser.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\TextHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\ToggleHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\SaveAssetEditor.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\ConvertEditor.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\PsdLayerNode.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\Converter.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\ImageHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\TMPButtonHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\UIHelperBase.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\TMPDropdownHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\ConvertParameter.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\PathUtil.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\MaskHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\DropdownHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\SaveTextureUtil.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\FillColorHelper.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\AsposePsdExtension.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\EditorUtil.cs" />
+    <Compile Include="Assets\Psd2uGui\Editor\Scripts\UIHelpers\InputFieldHelper.cs" />
+    <None Include="Assets\Psd2uGui\Editor\Psd2UGUI.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>E:\Program\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -353,11 +323,26 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>E:\Program\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>E:\Program\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>E:\Program\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.YamlDotNet">
+      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="Sirenix.Reflection.Editor">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Sirenix\Assemblies\Sirenix.Reflection.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Plastic.Antlr3.Runtime">
+      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="unityplastic">
+      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization.Config">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
@@ -368,11 +353,20 @@
     <Reference Include="Sirenix.OdinInspector.Editor">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Sirenix\Assemblies\Sirenix.OdinInspector.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Plastic.Newtonsoft.Json">
+      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Aspose.PSD">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Plugins\Aspose.PSD.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.Backports">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Plugins\MonoMod.Backports.dll</HintPath>
+    </Reference>
+    <Reference Include="log4netPlastic">
+      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\PackageCache\com.unity.collab-proxy@2.2.0\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.IonicZip">
+      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll</HintPath>
@@ -397,6 +391,9 @@
     </Reference>
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.TextureAssets">
+      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\PackageCache\com.unity.visualscripting@1.9.1\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Assets\Plugins\Mono.Cecil.Rocks.dll</HintPath>
@@ -785,53 +782,14 @@
     <Reference Include="System.Xml.XPath.XDocument">
       <HintPath>E:\Program\Unity\Hub\Editor\2022.3.17f1c1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.State.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Shared.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Core">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Core.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.State">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Flow">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Flow.Editor">
-      <HintPath>E:\UnityProject\PSD2UGUI_X\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
