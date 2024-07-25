@@ -39,6 +39,7 @@ namespace UGF.EditorTools.Psd2UGUI
         
         private static bool IsSlicedSprite(Sprite sprite)
         {
+            if (sprite == null) return false;
             Vector4 border = sprite.border;
             return border.x > 0 || border.y > 0 || border.z > 0 || border.w > 0;
         }

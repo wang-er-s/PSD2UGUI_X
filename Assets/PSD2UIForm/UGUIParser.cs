@@ -90,7 +90,7 @@ namespace UGF.EditorTools.Psd2UGUI
         [SerializeField]
         [PropertyOrder(2)]
         [LabelText("默认文本类型")]
-        private GUIType defaultTextType;
+        private GUIType defaultTextType = GUIType.TMPText;
 
         [SerializeField]
         [PropertyOrder(3)]

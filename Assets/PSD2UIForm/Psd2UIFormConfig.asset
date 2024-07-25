@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  defaultTextType: 3
+  defaultTextType: 12
   uiFormTemplate: {fileID: 3548335019738977768, guid: 6d8c85c377edc7240ace111136f916b1, type: 3}
   rules:
   - UIType: 0
@@ -73,16 +73,10 @@ MonoBehaviour:
     Comment: "\u80CC\u666F\u56FE,  \u5982Button\u80CC\u666F\uFF0CToggle\u80CC\u666F\u3001InputField\u80CC\u666F\u3001ScrollView\u7B49"
   - UIType: 4
     TypeMatches:
-    - oldbtn
+    - btn
     UIPrefab: {fileID: 3046286455018181150, guid: 7fb39a4b45dce0f4f82b619c80b0d811, type: 3}
     UIHelper: UGF.EditorTools.Psd2UGUI.ButtonHelper
     Comment: "\u6309\u94AE, \u901A\u5E38\u5305\u542B\u6309\u94AE\u80CC\u666F\u56FE\u3001\u6309\u94AE\u6587\u672C"
-  - UIType: 13
-    TypeMatches:
-    - btn
-    UIPrefab: {fileID: 3046286455018181150, guid: f91a5a8f057245e428f6532afb0e2c11, type: 3}
-    UIHelper: UGF.EditorTools.Psd2UGUI.TMPButtonHelper
-    Comment: "\u6309\u94AE(Text Mesh Pro)"
   - UIType: 102
     TypeMatches:
     - on

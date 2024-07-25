@@ -16,9 +16,6 @@ namespace UGF.EditorTools.Psd2UGUI
         [SerializeField]
         private PsdLayerNode background;
 
-        [SerializeField]
-        private PsdLayerNode text;
-
         [Header("Sprite Swap:")]
         [SerializeField]
         private PsdLayerNode highlight;
@@ -34,7 +31,7 @@ namespace UGF.EditorTools.Psd2UGUI
 
         public override PsdLayerNode[] GetDependencies()
         {
-            return CalculateDependencies(background, text, highlight, press, select, disable);
+            return CalculateDependencies(background, highlight, press, select, disable);
         }
 
         public override void ParseAndAttachUIElements()
@@ -42,7 +39,6 @@ namespace UGF.EditorTools.Psd2UGUI
             if (LayerNode.LayerType == PsdLayerType.LayerGroup)
             {
                 background = LayerNode.FindSubLayerNode(GUIType.Background, GUIType.Image, GUIType.RawImage);
-                text = LayerNode.FindSubLayerNode(GUIType.Button_Text, GUIType.Text, GUIType.TMPText);
                 highlight = LayerNode.FindSubLayerNode(GUIType.Button_Highlight);
                 press = LayerNode.FindSubLayerNode(GUIType.Button_Press);
                 select = LayerNode.FindSubLayerNode(GUIType.Button_Select);
@@ -60,9 +56,6 @@ namespace UGF.EditorTools.Psd2UGUI
             var btImg = button.GetComponent<Image>();
             btImg.sprite = background.LayerNode2Sprite();
             background.SetRectTransform(button);
-            var btText = uiRoot.GetComponentInChildren<Text>();
-            text.SetTextStyle(btText);
-            text.SetRectTransform(btText);
             var useSpriteSwap = highlight != null || press != null || select != null || disable != null;
             button.transition = useSpriteSwap ? Selectable.Transition.SpriteSwap : Selectable.Transition.ColorTint;
             if (button.transition == Selectable.Transition.SpriteSwap)
